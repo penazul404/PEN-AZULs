@@ -489,11 +489,15 @@
             navMenu.classList.toggle('active');
         });
 
-        // ダークモード切り替え
+        // ダークモード切り替え（クリック時にメニューを閉じる処理を追加）
         themeToggle.addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
             const isDark = document.body.classList.contains('dark-mode');
             themeText.textContent = isDark ? '☀️ ライトモード' : '🌙 ダークモード';
+            
+            // モード切り替え時にメニューとハンバーガーボタンを元に戻す
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
         });
     </script>
 
