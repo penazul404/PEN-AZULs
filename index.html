@@ -1,1 +1,501 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PEN AZUL - Official Website</title>
+    
+    <!-- Google Fontsの読み込み -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
 
+    <style>
+        :root {
+            --primary-color: #FF6B00; /* アクセントのオレンジ */
+            --bg-color: #FFFFFF; /* ベースの白 */
+            --text-color: #333333;
+            --light-gray: #F5F5F5;
+            --border-color: #E0E0E0;
+            --card-bg: #FFFFFF;
+            --header-bg: rgba(255, 255, 255, 0.95);
+            --sub-text: #555555;
+            --menu-bg: #FFFFFF;
+        }
+
+        /* ダークモード設定 */
+        body.dark-mode {
+            --bg-color: #121212;
+            --text-color: #E0E0E0;
+            --light-gray: #1E1E1E;
+            --border-color: #333333;
+            --card-bg: #1E1E1E;
+            --header-bg: rgba(18, 18, 18, 0.95);
+            --sub-text: #AAAAAA;
+            --menu-bg: #1E1E1E;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans JP', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        h1, h2, .eng-font {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ヘッダー */
+        header {
+            padding: 20px;
+            text-align: center;
+            background-color: var(--header-bg);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0 auto;
+        }
+
+        header h1 a {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        header h1 a:active, header h1 a:hover {
+            color: var(--primary-color);
+        }
+
+        /* ハンバーガーボタン */
+        .hamburger {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 102;
+        }
+
+        .hamburger span {
+            width: 100%;
+            height: 3px;
+            background-color: var(--text-color);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        /* メニュー開閉時の三本線アニメーション */
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(9.5px) rotate(45deg);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-9.5px) rotate(-45deg);
+        }
+
+        /* スライドメニュー */
+        .nav-menu {
+            position: fixed;
+            top: 0;
+            right: -250px;
+            width: 250px;
+            height: 100vh;
+            background-color: var(--menu-bg);
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            z-index: 101;
+            padding: 80px 20px 20px;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .nav-menu.active {
+            right: 0;
+        }
+
+        .theme-toggle-btn {
+            background-color: var(--light-gray);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        /* ヒーロー＆コンセプト */
+        .hero {
+            padding: 100px 20px;
+            text-align: center;
+            background-color: var(--light-gray);
+        }
+
+        .catchphrase {
+            font-size: 22px;
+            font-weight: 700;
+            line-height: 1.8;
+            letter-spacing: 1px;
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+
+        .catchphrase span {
+            color: var(--primary-color);
+        }
+
+        /* セクション共通 */
+        section {
+            padding: 60px 20px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 40px;
+            text-align: center;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* 更新情報 (News) エリア */
+        .news-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .news-list {
+            list-style: none;
+        }
+
+        .news-list li {
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 0;
+            font-size: 14px;
+        }
+
+        .news-list li:last-child {
+            border-bottom: none;
+        }
+
+        .news-date {
+            color: #888;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            margin-right: 10px;
+            display: inline-block;
+            min-width: 85px;
+        }
+        
+        .news-tag {
+            display: inline-block;
+            background-color: var(--text-color);
+            color: var(--bg-color);
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        .news-tag.apparel { background-color: var(--primary-color); color: #fff; }
+        .news-tag.video { background-color: #333; color: #fff; }
+
+        .news-list a {
+            color: var(--text-color);
+            text-decoration: none;
+            display: block;
+            margin-top: 5px;
+            transition: color 0.2s;
+        }
+
+        .news-list a:hover {
+            color: var(--primary-color);
+        }
+
+        /* サービス内容 */
+        .service-card {
+            background: var(--card-bg);
+            padding: 40px 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .service-card h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--primary-color);
+            display: inline-block;
+            padding-bottom: 5px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .service-card p {
+            font-size: 15px;
+            text-align: left;
+            margin-bottom: 25px;
+            color: var(--sub-text);
+        }
+
+        /* オーナーセクション特有スタイル */
+        .owner-avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            display: block;
+            border: 3px solid var(--primary-color);
+        }
+
+        .owner-name {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .owner-sns {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .owner-sns-btn {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.2s ease;
+        }
+
+        .owner-sns-btn:hover {
+            background-color: var(--primary-color);
+            color: #fff;
+            border-color: var(--primary-color);
+        }
+
+        /* ボタン */
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 14px 35px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            letter-spacing: 1px;
+            transition: opacity 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* フッター */
+        footer {
+            background-color: var(--light-gray);
+            color: var(--text-color);
+            padding: 50px 20px;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        footer h3 {
+            margin-bottom: 25px;
+            font-size: 20px;
+            letter-spacing: 2px;
+        }
+
+        .footer-sns {
+            margin-bottom: 30px;
+        }
+        
+        .footer-sns a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 14px;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 1px;
+            transition: color 0.2s ease;
+        }
+
+        .footer-sns a:hover {
+            color: var(--primary-color);
+        }
+
+        .copyright {
+            font-size: 12px;
+            color: #888;
+            font-family: 'Montserrat', sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1><a href="#">PEN AZUL</a></h1>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <!-- サイドメニュー -->
+    <nav class="nav-menu" id="nav-menu">
+        <button class="theme-toggle-btn" id="theme-toggle">
+            <span id="theme-text">🌙 ダークモード</span>
+        </button>
+    </nav>
+
+    <div class="hero">
+        <h2 class="catchphrase">
+            まだ、何者でもないから<br>
+            <span>何にでもなれる</span>
+        </h2>
+    </div>
+
+    <!-- サイトの更新情報 -->
+    <section id="news">
+        <h2 class="section-title">News</h2>
+        <div class="news-container">
+            <ul class="news-list">
+                <li>
+                    <span class="news-date">2026.08.24</span>
+                    <span class="news-tag apparel">Apparel</span>
+                    <a href="https://penry.official.ec/" target="_blank" rel="noopener noreferrer">公式アパレルショップ「PEN AZUL」を開設しました。</a>
+                </li>
+                <li>
+                    <span class="news-date">2026.08.24</span>
+                    <span class="news-tag video">Video</span>
+                    <a href="https://penazul404.github.io/PENAZUL/" target="_blank" rel="noopener noreferrer">動画編集専用サイト「PEN AZUL | Premium Video Production」を開設しました。</a>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 動画編集セクション -->
+    <section id="editing">
+        <h2 class="section-title">Video Editing</h2>
+        <div class="service-card">
+            <h3>Creative & Cut-out</h3>
+            <p>小学3年生から個人チャンネルを開始し、企画からサムネ制作、編集まで全工程を一人で完結させてきたノウハウを提供します。<br>short動画の短い動画にあなたの魅力を...</p>
+            <a href="https://penazul404.github.io/PENAZUL/" target="_blank" rel="noopener noreferrer" class="btn">動画編集サイトへ</a>
+        </div>
+    </section>
+
+    <!-- アパレルセクション -->
+    <section id="apparel">
+        <h2 class="section-title">Apparel Store</h2>
+        <div class="service-card">
+            <h3>Original Collection</h3>
+            <p>PEN AZULが展開するオリジナルアパレル。感性を大事にしたアイテムをお届けします。アイテムはこちらからご確認ください。</p>
+            <a href="https://penry.official.ec/" target="_blank" rel="noopener noreferrer" class="btn">オンラインストアへ</a>
+        </div>
+    </section>
+
+    <!-- オーナーセクション -->
+    <section id="owner">
+        <h2 class="section-title">Owner</h2>
+        <div class="service-card">
+            <img src="ぺん.jpg" alt="ぺん" class="owner-avatar">
+            <div class="owner-name">ぺん</div>
+            <p style="text-align: center;">代表 / クリエイター</p>
+            <div class="owner-sns">
+                <a href="https://youtube.com/@pen2336?si=tT45Os9kuFgR9bVe" target="_blank" rel="noopener noreferrer" class="owner-sns-btn">YOUTUBE</a>
+                <a href="https://twitter.com/pepen233644?s=11" target="_blank" rel="noopener noreferrer" class="owner-sns-btn">X (TWITTER)</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- お問い合わせセクション -->
+    <section id="contact">
+        <h2 class="section-title">Contact</h2>
+        <div class="service-card" style="box-shadow: none; background: transparent;">
+            <p style="text-align: center;">お仕事の問い合わせは専用フォームでお願いします。<br>アパレル、PENAZULの問い合わせはこちらから</p>
+            <br>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLScHpgDLda6zwPb6tzlLlaN9DGTdb7GsUDuwBRmo1a4qrmrUMg/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" class="btn">お問い合わせフォーム</a>
+        </div>
+    </section>
+
+    <footer>
+        <h3>PEN AZUL</h3>
+        <div class="footer-sns">
+            <a href="https://youtube.com/@penazul-h7f?si=d6JmltiIwKaPomDH" target="_blank" rel="noopener noreferrer">YOUTUBE</a>
+            <a href="https://x.com/PENAZUL404?s=20" target="_blank" rel="noopener noreferrer">X (TWITTER)</a>
+        </div>
+        <p class="copyright">&copy; 2026 PEN AZUL All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeText = document.getElementById('theme-text');
+
+        // メニューの開閉
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // ダークモード切り替え
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            themeText.textContent = isDark ? '☀️ ライトモード' : '🌙 ダークモード';
+        });
+    </script>
+
+</body>
+</html>
